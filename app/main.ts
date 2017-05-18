@@ -1,0 +1,1 @@
+alert('Esse kra eh fera');

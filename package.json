@@ -1,0 +1,29 @@
+{
+  "name": "appstation",
+  "version": "1.0.0",
+  "description": "Javascript Appstore like enviroment Framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "start": "webpack-dev-server --content-base dist/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ferreirarod/appstation.git"
+  },
+  "keywords": [
+    "Javascript",
+    "Appstore"
+  ],
+  "author": "ferreirarod",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ferreirarod/appstation/issues"
+  },
+  "homepage": "https://github.com/ferreirarod/appstation#readme",
+  "devDependencies": {
+    "source-map-loader": "^0.2.1",
+    "webpack": "^2.5.1"
+  }
+}
