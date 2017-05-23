@@ -1,4 +1,8 @@
 import * as firebase from "firebase";
+import stateEngine from "./state-engine";
+import App from "./app";
+
+new App(document.body, "app");
 
 const config = {
     apiKey: "AIzaSyAwqLT6tZ9eKRATdUqF8F9KztqtWw3ADN8",
@@ -11,24 +15,17 @@ const config = {
 
 firebase.initializeApp(config);
 
-const provider = new firebase.auth.GoogleAuthProvider();
-
-provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-
-provider.setCustomParameters({
-    'login_hint': 'user@example.com'
-});
-
-firebase.auth().getRedirectResult().then(function (result) {
+firebase.auth().getRedirectResult().then((result) => {
     if (result.credential) {
         // This gives you a Google Access Token. You can use it to access the Google API.
         var token = result.credential.accessToken;
         // ...
+        console.log(token);
     }
     // The signed-in user info.
-    var user = result.user;
-}).catch(function (error) {
-    firebase.auth().signInWithRedirect(provider);
+    console.log(result.user);
+    stateEngine.set("user", result.user);
+}).catch((error) => {
     // Handle Errors here.
     //var errorCode = error.code;
     //var errorMessage = error.message;

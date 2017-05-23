@@ -17,9 +17,13 @@ export class AppStationStateListeners{
     public getListeners(): Array<(state: Object, property: string, value: any) => void>{
         return this.listeners;
     }
+
+    public set(property: string, value: any){
+        (this as any)[property] = value;
+    }
 }
 
-export const AppStationState:any = new Proxy(new AppStationStateListeners(), {
+const AppStationState:any = new Proxy(new AppStationStateListeners(), {
     set: (obj: any, property: string, value: any) => {
         obj[property] = value;
         obj.getListeners().forEach((fn: (state: Object, property: string, value: any) => void) => {
@@ -28,3 +32,7 @@ export const AppStationState:any = new Proxy(new AppStationStateListeners(), {
         return true;
     }
 });
+
+const stateEngine:AppStationStateListeners = AppStationState as AppStationStateListeners;
+
+export default stateEngine;
