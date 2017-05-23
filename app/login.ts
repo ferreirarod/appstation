@@ -25,7 +25,6 @@ export default class Login extends Component {
     protected onStateChange(): (state: Object, property: string, value: any) => void {
         return (state: Object, property: string, value: any) => {
             if (property == "user") {
-                console.log("ueba");
                 this.getContainer().style.display = value != null ? 'none' : null;
             }
         }

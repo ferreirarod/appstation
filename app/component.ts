@@ -1,6 +1,6 @@
 import stateEngine from "./state-engine";
 
-export default abstract class Component {
+abstract class Component {
 
     private parent: HTMLElement;
 
@@ -46,4 +46,6 @@ export default abstract class Component {
         // nothing here
     }
 
-}
+};
+
+export default Component;
