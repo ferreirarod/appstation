@@ -17,7 +17,7 @@ export default abstract class Component {
         this.parent.appendChild(this.container);
         this.afterRendered();
 
-        stateEngine.addListener(this.onStateChange);
+        stateEngine.addListener(this.onStateChange());
     }
 
     public setStyle(style: string): void {
@@ -38,8 +38,8 @@ export default abstract class Component {
 
     protected abstract getInnerHTML(): string;
 
-    protected onStateChange(state: Object, property: string, value: any): void{
-        // nothing here
+    protected onStateChange(): (state: Object, property: string, value: any) => void{
+        return () => {};
     }
 
     protected afterRendered(){

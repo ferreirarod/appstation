@@ -18,8 +18,4 @@ export default class App extends Component {
         this.login = new Login(this.getContainer(), "login");
     }
 
-    protected onStateChange(state: Object, property: string, value: any): void {
-        // nothing here (yet?)
-    }
-
 }

@@ -22,10 +22,12 @@ export default class Login extends Component {
         return `<button id="${this.getId()}:googleLogin">Google Login</button>`;
     }
 
-    protected onStateChange(state: Object, property: string, value: any): void {
-        if (property == "user") {
-            console.log("ueba");
-            this.getContainer().style.display = value != null ? 'none' : null;
+    protected onStateChange(): (state: Object, property: string, value: any) => void {
+        return (state: Object, property: string, value: any) => {
+            if (property == "user") {
+                console.log("ueba");
+                this.getContainer().style.display = value != null ? 'none' : null;
+            }
         }
     }
 
