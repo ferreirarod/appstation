@@ -28,7 +28,11 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"]
+    extensions: [".tsx", ".ts", ".js"],
+    alias: {
+      "jquery-ui": "jquery-ui/ui",
+      "gridstack.jQueryUI": "gridstack/dist/gridstack.jQueryUI"
+    }
   },
   devtool: 'inline-source-map'
 };

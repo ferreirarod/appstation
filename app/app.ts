@@ -1,7 +1,7 @@
 import Component from "./component";
 import Login from "./login";
-
-declare const $:any;
+import * as $ from "jquery";
+import "gridstack.jQueryUI";
 
 export default class App extends Component {
 
@@ -12,13 +12,6 @@ export default class App extends Component {
         
              <section id="demo" class="darklue">
                 <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12 text-center">
-                            <h2>Demo</h2>
-                            <hr class="star-light">
-                        </div>
-                    </div>
-
                     <div class="grid-stack" data-gs-width="12" data-gs-animate="yes">
                         <div class="grid-stack-item" data-gs-x="0" data-gs-y="0" data-gs-width="4" data-gs-height="2"><div class="grid-stack-item-content">1</div></div>
                         <div class="grid-stack-item" data-gs-x="4" data-gs-y="0" data-gs-width="4" data-gs-height="4"><div class="grid-stack-item-content">2</div></div>

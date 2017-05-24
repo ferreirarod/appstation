@@ -30,6 +30,9 @@
     "webpack-dev-server": "^2.4.5"
   },
   "dependencies": {
-    "firebase": "^4.0.0"
+    "@types/gridstack": "0.0.34",
+    "@types/jquery": "^2.0.45",
+    "firebase": "^4.0.0",
+    "gridstack": "^0.3.0"
   }
 }
