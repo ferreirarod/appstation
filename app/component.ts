@@ -36,7 +36,9 @@ abstract class Component {
         return this.container;
     }
 
-    protected abstract getInnerHTML(): string;
+    protected getInnerHTML(): string{
+        return '';
+    }
 
     protected onStateChange(): (state: Object, property: string, value: any) => void{
         return () => {};
