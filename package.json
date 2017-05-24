@@ -23,7 +23,10 @@
   },
   "homepage": "https://github.com/ferreirarod/appstation#readme",
   "devDependencies": {
+    "css-loader": "^0.28.2",
+    "extract-text-webpack-plugin": "^2.1.0",
     "source-map-loader": "^0.2.1",
+    "style-loader": "^0.18.1",
     "ts-loader": "^2.0.3",
     "typescript": "^2.3.2",
     "webpack": "^2.5.1",
