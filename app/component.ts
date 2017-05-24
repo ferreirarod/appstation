@@ -41,7 +41,7 @@ abstract class Component {
     }
 
     protected onStateChange(): (state: Object, property: string, value: any) => void{
-        return () => {};
+        return null;
     }
 
     protected afterRendered(){
