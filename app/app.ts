@@ -3,7 +3,7 @@ import Login from "./login";
 import * as $ from "jquery";
 import "gridstack.jQueryUI";
 
-import "gridstack/dist/gridstack.css";
+import "style-loader!gridstack/dist/gridstack.css";
 
 export default class App extends Component {
 

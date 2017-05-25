@@ -1,4 +1,3 @@
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const path = require("path");
 module.exports = {
   entry: {
@@ -28,10 +27,19 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: "style-loader",
-          use: "css-loader"
-        })
+        use: [
+          { loader: "style-loader" },
+          { loader: "css-loader" },
+        ],
+      },
+      {
+        test: /\.useable\.css$/,
+        use: [
+          {
+            loader: "style-loader/useable"
+          },
+          { loader: "css-loader" },
+        ],
       }
     ]
   },
@@ -42,8 +50,5 @@ module.exports = {
       "gridstack.jQueryUI": "gridstack/dist/gridstack.jQueryUI"
     }
   },
-  devtool: 'inline-source-map',
-  plugins: [
-    new ExtractTextPlugin("styles.css"),
-  ]
+  devtool: 'inline-source-map'
 };
