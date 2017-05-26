@@ -19,7 +19,7 @@ export default class Login extends Component {
     }
 
     protected getInnerHTML(): string {
-        return `<button id="${this.getId()}:googleLogin">Google Login</button>`;
+        return `<button id="${this.getId()}-googleLogin">Google Login</button>`;
     }
 
     protected onStateChange(): (state: Object, property: string, value: any) => void {
@@ -31,9 +31,10 @@ export default class Login extends Component {
     }
 
     protected afterRendered() {
-        document.getElementById(`${this.getId()}:googleLogin`).onclick = () => {
+        document.getElementById(`${this.getId()}-googleLogin`).onclick = () => {
             firebase.auth().signInWithRedirect(this.provider);
         }
+        this.getContainer().style.display = 'none';
     }
 
 }

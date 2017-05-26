@@ -1,16 +1,20 @@
 import Component from "./component";
 import Login from "./login";
-import AppGrid from "./app-grid";
+import Content from "./content";
+import Loading from "./loading";
 
 export default class App extends Component {
 
     private login: Login;
 
-    private appGrid: AppGrid;
+    private content: Content;
+
+    private loading: Loading;
 
     protected afterRendered(){
-        this.login = new Login(this.getContainer(), "login");
-        this.appGrid = new AppGrid(this.getContainer(), "appGrid");
+        this.login = new Login(this.getContainer(), "app-station-login");
+        this.content = new Content(this.getContainer(), "app-station-content");
+        this.loading = new Loading(this.getContainer(), "app-station-loading");
     }
 
 }

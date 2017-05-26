@@ -1,0 +1,76 @@
+body{
+    padding: 0;
+    margin: 0;
+    background-color: #f2f2f2;
+}
+
+.app-station-header{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: block;
+    flex: 0 0 auto;
+    background-color: #f6f6f6;
+    -webkit-box-shadow: 0 3px 4px 0 rgba(0,0,0,0.14), 0 3px 3px -2px rgba(0,0,0,0.12), 0 1px 8px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 3px 4px 0 rgba(0,0,0,0.14), 0 3px 3px -2px rgba(0,0,0,0.12), 0 1px 8px 0 rgba(0,0,0,0.2);
+    z-index: 20;
+    height: 48px;
+}
+
+.app-station-header div,.app-station-header span{
+    margin-top: 6px;    
+}
+
+.app-station-header-photo{
+    float:right;
+    -webkit-background-size: 32px 32px;
+    background-size: 32px 32px;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    display: block;
+    overflow: hidden;
+    position: relative;
+    height: 32px;
+    width: 32px;
+    z-index: 0;
+    margin-right: 16px;
+    cursor: pointer;
+}
+
+.app-station-loading{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -21px 0 0 -21px;
+}
+
+.app-station-content{
+    position: absolute;
+    top: 48px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.app-station-grid{
+    position: relative;
+    padding: 32px;
+}
+
+.app-station-grid .grid-stack-item-content{
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    font-size: 16px;
+    font-weight: 400;
+    overflow: hidden;
+    z-index: 1;
+    position: relative;
+    background: #fff;
+    border-radius: 2px;
+    box-sizing: border-box;
+}
