@@ -8,7 +8,7 @@ export default class Grid extends Component {
 
     protected getInnerHTML(): string {
         return `<div class="grid-stack" data-gs-width="12" data-gs-animate="yes">
-                    <div class="grid-stack-item" data-gs-x="0" data-gs-y="0" data-gs-width="4" data-gs-height="2"><div class="grid-stack-item-content">1</div></div>
+                    <div class="grid-stack-item" data-gs-x="0" data-gs-y="0"><div class="grid-stack-item-content" style="width: 200px">1</div></div>
                     <div class="grid-stack-item" data-gs-x="4" data-gs-y="0" data-gs-width="4" data-gs-height="4"><div class="grid-stack-item-content">2</div></div>
                     <div class="grid-stack-item" data-gs-x="8" data-gs-y="0" data-gs-width="2" data-gs-height="2" data-gs-min-width="2" data-gs-no-resize="yes">
                         <div class="grid-stack-item-content"> <span class="fa fa-hand-o-up"></span> Drag me! </div>
@@ -25,7 +25,7 @@ export default class Grid extends Component {
     }
 
     protected afterRendered(){
-        $(function () {
+        $(() => {
             $('.grid-stack').gridstack({
                 width: 12,
                 alwaysShowResizeHandle: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
@@ -34,8 +34,15 @@ export default class Grid extends Component {
             document.querySelectorAll('.grid-stack-item').forEach((item:HTMLElement) => {
                 grid.resizable(item, false);
             });
+            $('.grid-stack').on('change', (event: JQueryEventObject, items: any[]) => {
+                this.serializeGridState(items);
+            });
         });
         this.setClass("app-station-grid");
+    }
+
+    private serializeGridState(items:any[]){
+        console.log(items);
     }
 
 }
