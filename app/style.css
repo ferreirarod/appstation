@@ -37,6 +37,12 @@ body{
     cursor: pointer;
 }
 
+.app-station-header-menu{
+    float: left;
+    margin: 14px 0 0 16px;
+    cursor: pointer;
+}
+
 .app-station-loading{
     position: absolute;
     top: 50%;

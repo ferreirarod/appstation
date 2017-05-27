@@ -1,20 +1,75 @@
-import Component from "./component";
-import Login from "./login";
-import Content from "./content";
-import Loading from "./loading";
+export interface GridStackOptions {
+    x?: number,
+    y?: number,
+    width?: number,
+    height?: number,
+    autoPosition?: true,
+    minWidth?: number,
+    maxWidth?: number,
+    minHeight?: number,
+    maxHeight?: number,
+    id: string
+}
 
-export default class App extends Component {
+abstract class App {
 
-    private login: Login;
+    private id: string;
+    private width: number;
+    private height: number;
+    private container: HTMLElement;
+    private fullscreen: boolean;
 
-    private content: Content;
+    contructor(id: string, fullscreen?: boolean, width?: number, height?: number) {
+        this.id = id;
+        this.width = width;
+        this.height = height;
+        this.fullscreen = fullscreen;
 
-    private loading: Loading;
+        this.container = document.createElement("div");
+        this.container.id = this.id;
+        this.container.innerHTML = this.getInnerHTML();
 
-    protected afterRendered(){
-        this.login = new Login(this.getContainer(), "app-station-login");
-        this.content = new Content(this.getContainer(), "app-station-content");
-        this.loading = new Loading(this.getContainer(), "app-station-loading");
+        this.afterRendered();
     }
 
+    protected getInnerHTML(): string {
+        return '';
+    }
+
+    protected afterRendered() {
+        // nothing here
+    }
+
+    public getContainer(): HTMLElement {
+        return this.container;
+    }
+
+    public getId(): string {
+        return this.id;
+    }
+
+    public isFullScreenApp(): boolean {
+        return this.fullscreen;
+    }
+
+    protected onWidgetMode(): void {
+
+    }
+
+    protected onFullScreen(): void {
+
+    }
+
+    public getGridStackOptions(): GridStackOptions {
+        return {
+            x: 0,
+            y: 0,
+            width: this.width,
+            height: this.height,
+            autoPosition: true,
+            id: this.id
+        }
+    }
 }
+
+export default App;
