@@ -1,6 +1,7 @@
 import Component from "./component";
 import Header from "./header";
 import Grid from "./grid";
+import AppList from "./app-list";
 
 export default class AppContent extends Component {
 
@@ -8,7 +9,10 @@ export default class AppContent extends Component {
 
     private header: Header;
 
+    private appList: AppList;
+
     protected afterRendered() {
+        this.appList = new AppList(this.getContainer(), "app-station-app-list");
         this.header = new Header(this.getContainer(), "app-station-header");
         this.grid = new Grid(this.getContainer(), "app-station-grid");
         this.setClass("app-station-content");
