@@ -14,9 +14,7 @@ export default class AppStation extends Component {
 
     private loading: Loading;
 
-    private Apps: Array<App>;
-
-    constructor(config: any, Apps: Array<App>) {
+    constructor(config: any, apps: Array<App>) {
         super(document.body, "app-station");
         firebase.initializeApp(config);
         firebase.auth().onAuthStateChanged((user: any) => {
@@ -26,6 +24,7 @@ export default class AppStation extends Component {
                 stateEngine.set("user", null);
             }
         });
+        stateEngine.set("available-apps", apps);
     }
 
     protected afterRendered() {

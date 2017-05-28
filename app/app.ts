@@ -18,12 +18,16 @@ abstract class App {
     private height: number;
     private container: HTMLElement;
     private fullscreen: boolean;
+    private name: string;
+    private description: string;
 
-    contructor(id: string, fullscreen?: boolean, width?: number, height?: number) {
+    constructor(id: string, name: string, description: string, fullscreen?: boolean, width?: number, height?: number) {
         this.id = id;
         this.width = width;
         this.height = height;
         this.fullscreen = fullscreen;
+        this.name = name;
+        this.description = description;
 
         this.container = document.createElement("div");
         this.container.id = this.id;
@@ -52,7 +56,7 @@ abstract class App {
         return this.fullscreen;
     }
 
-    protected onWidgetMode(): void {
+    protected onWidget(): void {
 
     }
 

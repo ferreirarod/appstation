@@ -43,6 +43,32 @@ body{
     cursor: pointer;
 }
 
+.app-station-header-title{
+    display: block;
+    position: relative;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-size: 20px;
+    line-height: 1;
+    letter-spacing: .02em;
+    font-weight: 400;
+    box-sizing: border-box;
+    float: left;
+    padding: 8px 0 0 26px;
+    color: #666;
+}
+
+.app-station-app-list-title{
+    display: block;
+    position: relative;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-size: 25px;
+    line-height: 1;
+    letter-spacing: .02em;
+    font-weight: 400;
+    box-sizing: border-box;
+    padding: 20px 0 0 26px;
+}
+
 .app-station-loading{
     position: absolute;
     top: 50%;

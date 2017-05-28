@@ -8,21 +8,22 @@ export default class Header extends Component {
 
     private menu: HTMLElement;
 
-    protected getInnerHTML(): string{
+    protected getInnerHTML(): string {
         return `
             <svg id="${this.getId()}-menu" class="app-station-header-menu" version="1.0" xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 128.000000 128.000000" preserveAspectRatio="xMidYMid meet"> <g transform="translate(0.000000,128.000000) scale(0.100000,-0.100000)" fill="#666" stroke="none"> <path d="M30 1253 c-8 -3 -18 -11 -22 -17 -13 -19 -9 -221 4 -234 17 -17 1239 -17 1256 0 15 15 16 216 2 238 -8 13 -89 15 -617 17 -334 1 -615 -1 -623 -4z"/> <path d="M12 758 c-16 -16 -16 -220 0 -236 17 -17 1239 -17 1256 0 16 16 16 220 0 236 -17 17 -1239 17 -1256 0z"/> <path d="M12 278 c-15 -15 -16 -216 -2 -238 8 -13 89 -15 630 -15 541 0 622 2 630 15 14 22 13 223 -2 238 -17 17 -1239 17 -1256 0z"/> </g> </svg>
+            <span id="${this.getId()}-title" class="app-station-header-title">App Station</span>
             <span id="${this.getId()}-photo" class="app-station-header-photo"></span>
         `;
     }
 
-    protected afterRendered(): void{
+    protected afterRendered(): void {
         this.setClass("app-station-header");
         this.photo = this.getContainer().querySelector(`#${this.getId()}-photo`) as HTMLSpanElement;
         this.photo.onclick = () => {
-            firebase.auth().signOut().then(function() {
+            firebase.auth().signOut().then(function () {
                 stateEngine.set("user", null);
-            }).catch(function(error) {
-            // An error happened.
+            }).catch(function (error) {
+                // An error happened.
             });
         }
         this.menu = this.getContainer().querySelector(`#${this.getId()}-menu`) as HTMLElement;
@@ -34,7 +35,7 @@ export default class Header extends Component {
     protected onStateChange(): (state: Object, property: string, value: any) => void {
         return (state: Object, property: string, value: any) => {
             if (property == "user") {
-                if(value != null){
+                if (value != null) {
                     this.photo.style.content = `url(${value.photoURL})`;
                 }
             }
