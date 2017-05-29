@@ -32,15 +32,13 @@ abstract class App {
         this.container = document.createElement("div");
         this.container.id = this.id;
         this.container.innerHTML = this.getInnerHTML();
-
-        this.afterRendered();
     }
 
     protected getInnerHTML(): string {
         return '';
     }
 
-    protected afterRendered() {
+    protected onWidgetCreated() {
         // nothing here
     }
 
@@ -62,6 +60,14 @@ abstract class App {
 
     protected onFullScreen(): void {
 
+    }
+
+    public getName(): string {
+        return this.name;
+    }
+
+    public getDescription(): string {
+        return this.description;
     }
 
     public getGridStackOptions(): GridStackOptions {
