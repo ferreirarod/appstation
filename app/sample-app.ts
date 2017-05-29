@@ -3,7 +3,7 @@ import App from "./app";
 class SampleApp extends App {
 
     constructor(id: string, width: number, height: number) {
-        super(id, id, "Sample App to test if this whole idea works", false, width, height);
+        super(id, id, "Sample App to test if this whole idea works", true, width, height);
     }
 
     protected getInnerHTML(): string {

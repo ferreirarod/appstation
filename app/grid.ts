@@ -38,24 +38,40 @@ export default class Grid extends Component {
             switch (property) {
                 case "installed-apps":
                     this.syncApps(value as Array<App>);
+                case "fullscreen-app":
+                    this.fullscreenApp(value as App);
             }
         }
+    }
+
+    private fullscreenApp(app: App): void {
+        const grid = $('.grid-stack').data('gridstack');
+        grid.disable();
+        app.getContainer().classList.toggle("app-station-fullscreen");
+        app.getContainer().classList.toggle("grid-stack-item");
+        app.getContentElement().classList.toggle("grid-stack-item-content")
+        app.onFullScreen();
+        document.querySelectorAll('.grid-stack-item').forEach((elem: HTMLElement) => {
+            if (elem.id != app.getId()) {
+                elem.style.display = 'none';
+            }
+        })
     }
 
     private syncApps(apps: Array<App>): void {
         const grid = $('.grid-stack').data('gridstack');
         const items = document.querySelectorAll('.grid-stack-item');
-        if(items.length != 0){
+        if (items.length != 0) {
             const toRemove: Array<String> = [];
-            for(let i = 0; i < items.length; i++){
-                if(apps.filter(app => app.getId() == items[i].id).length == 0){
+            for (let i = 0; i < items.length; i++) {
+                if (apps.filter(app => app.getId() == items[i].id).length == 0) {
                     toRemove.push(items[i].id);
                 }
             }
             const availableApps: Array<App> = stateEngine.get("available-apps") as Array<App>;
-            if(availableApps != null){
+            if (availableApps != null) {
                 availableApps.forEach(app => {
-                    if(toRemove.indexOf(app.getId()) != -1){
+                    if (toRemove.indexOf(app.getId()) != -1) {
                         grid.removeWidget(app.getContainer());
                         app.onWidgetRemoved();
                     }
@@ -63,10 +79,17 @@ export default class Grid extends Component {
             }
         }
         apps.forEach(app => {
-            if(document.querySelector(`#${app.getId()}`) == null){
+            if (document.querySelector(`#${app.getId()}`) == null) {
                 const gridOptions = app.getGridStackOptions();
                 grid.addWidget(app.getContainer(), gridOptions.x, gridOptions.y, gridOptions.width,
                     gridOptions.height, gridOptions.autoPosition, null, null, null, null, gridOptions.id);
+                if (app.isFullScreenApp() == true) {
+                    const handler = (event: JQueryEventObject, ui: any) => {
+                        $(app.getContainer()).off('click', handler);
+                        stateEngine.set("fullscreen-app", app);
+                    };
+                    $(app.getContainer()).on('click', handler);
+                }
                 app.onWidgetCreated();
                 grid.resizable(app.getContainer(), false);
             }
@@ -75,14 +98,14 @@ export default class Grid extends Component {
 
     private serializeGridState() {
         const items = document.querySelectorAll('.grid-stack-item');
-        if(items.length != this.widgetCount){
+        if (items.length != this.widgetCount) {
             this.widgetCount = items.length;
-        }else{
+        } else {
             const installedApps = stateEngine.get("installed-apps") as Array<App>;
             const newInstalledApps = new Array<App>();
             items.forEach(item => {
                 const filtered = installedApps.filter(app => app.getId() == item.id);
-                if(filtered != null && filtered.length != 0){
+                if (filtered != null && filtered.length != 0) {
                     const app = filtered[0];
                     app.setX(parseInt(item.getAttribute("data-gs-x")));
                     app.setY(parseInt(item.getAttribute("data-gs-y")));

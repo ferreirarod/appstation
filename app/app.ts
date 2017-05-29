@@ -72,11 +72,11 @@ abstract class App {
         return this.fullscreen;
     }
 
-    protected onWidget(): void {
+    public onWidget(): void {
 
     }
 
-    protected onFullScreen(): void {
+    public onFullScreen(): void {
 
     }
 
