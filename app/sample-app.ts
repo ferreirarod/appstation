@@ -2,12 +2,12 @@ import App from "./app";
 
 class SampleApp extends App {
 
-    constructor() {
-        super("sample-app", "Sample App", "Sample Idea to test if this hole idea works");
+    constructor(id: string, width: number, height: number) {
+        super(id, id, "Sample App to test if this whole idea works", false, width, height);
     }
 
     protected getInnerHTML(): string {
-        return "My Sample App";
+        return this.getId();
     }
 
 }

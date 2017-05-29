@@ -5,6 +5,7 @@ import Login from "./login";
 import Content from "./content";
 import Loading from "./loading";
 import App from "./app";
+import appGridService from "./app-grid-service";
 
 export default class AppStation extends Component {
 
@@ -20,11 +21,12 @@ export default class AppStation extends Component {
         firebase.auth().onAuthStateChanged((user: any) => {
             if (user) {
                 stateEngine.set("user", user);
+                stateEngine.set("available-apps", apps);
+                appGridService.loadGrid();
             } else {
                 stateEngine.set("user", null);
             }
         });
-        stateEngine.set("available-apps", apps);
     }
 
     protected afterRendered() {

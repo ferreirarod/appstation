@@ -1,6 +1,7 @@
 import Component from "./component";
 import stateEngine from "./state-engine";
 import App from "./app";
+import appGridService from "./app-grid-service";
 
 class AppList extends Component {
 
@@ -22,7 +23,7 @@ class AppList extends Component {
         this.overlay = this.getContainer().querySelector(`#${this.getId()}-overlay`) as HTMLDivElement;
         this.overlay.onclick = () => {
             stateEngine.set("app-list-menu-visible", false);
-        }
+        };
         this.getContainer().style.display = 'none';
     }
 
@@ -48,7 +49,7 @@ class AppList extends Component {
             if (ul.children.length != 0) {
                 ul.querySelectorAll("li").forEach(li => {
                     ul.removeChild(li);
-                })
+                });
             }
             apps.forEach(app => {
                 const installedApps = stateEngine.get("installed-apps");
@@ -67,10 +68,11 @@ class AppList extends Component {
                     const newInstalledApps = installedApps != null ? [...installedApps] : [];
                     newInstalledApps.push(app);
                     stateEngine.set("installed-apps", newInstalledApps);
+                    appGridService.saveInstalledGrid();
                     stateEngine.set("app-list-menu-visible", false);
                 }
                 ul.appendChild(li);
-            })
+            });
         }
     }
 

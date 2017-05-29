@@ -2,25 +2,22 @@ import Component from "./component";
 import * as $ from "jquery";
 import "gridstack.jQueryUI";
 import App from "./app";
+import stateEngine from "./state-engine";
+import appGridService from "./app-grid-service";
 
 import "style-loader!gridstack/dist/gridstack.css";
 
 export default class Grid extends Component {
 
+    private widgetCount: number;
+
+    constructor(parent: HTMLElement, id: string) {
+        super(parent, id);
+        this.widgetCount = 0;
+    }
+
     protected getInnerHTML(): string {
-        return `<div class="grid-stack" data-gs-width="12" data-gs-animate="yes">
-                    <div class="grid-stack-item" data-gs-x="0" data-gs-y="0" data-gs-width="4" data-gs-height="2"><div class="grid-stack-item-content">1</div></div>
-                    <div class="grid-stack-item" data-gs-x="4" data-gs-y="0" data-gs-width="4" data-gs-height="4"><div class="grid-stack-item-content">2</div></div>
-                    <div class="grid-stack-item" data-gs-x="8" data-gs-y="0" data-gs-width="2" data-gs-height="2" data-gs-min-width="2" data-gs-no-resize="yes"><div class="grid-stack-item-content"> <span class="fa fa-hand-o-up"></span> Drag me! </div></div>
-                    <div class="grid-stack-item" data-gs-x="10" data-gs-y="0" data-gs-width="2" data-gs-height="2"><div class="grid-stack-item-content">4</div></div>
-                    <div class="grid-stack-item" data-gs-x="0" data-gs-y="2" data-gs-width="2" data-gs-height="2"><div class="grid-stack-item-content">5</div></div>
-                    <div class="grid-stack-item" data-gs-x="2" data-gs-y="2" data-gs-width="2" data-gs-height="4"><div class="grid-stack-item-content">6</div></div>
-                    <div class="grid-stack-item" data-gs-x="8" data-gs-y="2" data-gs-width="4" data-gs-height="2"><div class="grid-stack-item-content">7</div></div>
-                    <div class="grid-stack-item" data-gs-x="0" data-gs-y="4" data-gs-width="2" data-gs-height="2"><div class="grid-stack-item-content">8</div></div>
-                    <div class="grid-stack-item" data-gs-x="4" data-gs-y="4" data-gs-width="4" data-gs-height="2"><div class="grid-stack-item-content">9</div></div>
-                    <div class="grid-stack-item" data-gs-x="8" data-gs-y="4" data-gs-width="2" data-gs-height="2"><div class="grid-stack-item-content">10</div></div>
-                    <div class="grid-stack-item" data-gs-x="10" data-gs-y="4" data-gs-width="2" data-gs-height="2"><div class="grid-stack-item-content">11</div></div>
-                </div>`;
+        return `<div class="grid-stack" data-gs-width="12" data-gs-animate="yes"></div>`;
     }
 
     protected afterRendered() {
@@ -29,12 +26,8 @@ export default class Grid extends Component {
                 width: 12,
                 alwaysShowResizeHandle: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
             });
-            const grid = $('.grid-stack').data('gridstack');
-            // document.querySelectorAll('.grid-stack-item').forEach((item:HTMLElement) => {
-            //     grid.resizable(item, false);
-            // });
             $('.grid-stack').on('change', (event: JQueryEventObject, items: any[]) => {
-                this.serializeGridState(items);
+                this.serializeGridState();
             });
         });
         this.setClass("app-station-grid");
@@ -50,16 +43,56 @@ export default class Grid extends Component {
     }
 
     private syncApps(apps: Array<App>): void {
+        const grid = $('.grid-stack').data('gridstack');
+        const items = document.querySelectorAll('.grid-stack-item');
+        if(items.length != 0){
+            const toRemove: Array<String> = [];
+            for(let i = 0; i < items.length; i++){
+                if(apps.filter(app => app.getId() == items[i].id).length == 0){
+                    toRemove.push(items[i].id);
+                }
+            }
+            const availableApps: Array<App> = stateEngine.get("available-apps") as Array<App>;
+            if(availableApps != null){
+                availableApps.forEach(app => {
+                    if(toRemove.indexOf(app.getId()) != -1){
+                        grid.removeWidget(app.getContainer());
+                        app.onWidgetRemoved();
+                    }
+                });
+            }
+        }
         apps.forEach(app => {
-            const grid = $('.grid-stack').data('gridstack');
-            const gridOptions = app.getGridStackOptions();
-            grid.addWidget(app.getContainer(), gridOptions.x, gridOptions.y, gridOptions.width,
-                gridOptions.height, gridOptions.autoPosition, null, null, null, null, gridOptions.id);
+            if(document.querySelector(`#${app.getId()}`) == null){
+                const gridOptions = app.getGridStackOptions();
+                grid.addWidget(app.getContainer(), gridOptions.x, gridOptions.y, gridOptions.width,
+                    gridOptions.height, gridOptions.autoPosition, null, null, null, null, gridOptions.id);
+                app.onWidgetCreated();
+                grid.resizable(app.getContainer(), false);
+            }
         });
     }
 
-    private serializeGridState(items: any[]) {
-        //console.log(items);
+    private serializeGridState() {
+        const items = document.querySelectorAll('.grid-stack-item');
+        if(items.length != this.widgetCount){
+            this.widgetCount = items.length;
+        }else{
+            const installedApps = stateEngine.get("installed-apps") as Array<App>;
+            const newInstalledApps = new Array<App>();
+            items.forEach(item => {
+                const filtered = installedApps.filter(app => app.getId() == item.id);
+                if(filtered != null && filtered.length != 0){
+                    const app = filtered[0];
+                    app.setX(parseInt(item.getAttribute("data-gs-x")));
+                    app.setY(parseInt(item.getAttribute("data-gs-y")));
+                    app.setAutoPosition(false);
+                    newInstalledApps.push(app);
+                }
+            })
+            stateEngine.set("installed-apps", newInstalledApps);
+            appGridService.saveInstalledGrid();
+        }
     }
 
 }
