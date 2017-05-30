@@ -23,6 +23,8 @@ export default class AppContent extends Component {
         return (state: Object, property: string, value: any) => {
             if (property == "user") {
                 this.getContainer().style.display = value != null ? null : 'none';
+            }else if(property == "fullscreen-app"){
+                this.getContainer().style.overflowY = value != null? 'hidden' : 'auto';
             }
         }
     }

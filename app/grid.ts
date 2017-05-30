@@ -47,18 +47,49 @@ export default class Grid extends Component {
     }
 
     private fullscreenApp(app: App): void {
-        console.log(app);
         const grid = $('.grid-stack').data('gridstack');
-        grid.disable();
-        app.getContainer().classList.toggle("app-station-fullscreen");
-        app.getContainer().classList.toggle("grid-stack-item");
-        app.getContentElement().classList.toggle("grid-stack-item-content")
-        app.onFullScreen();
-        document.querySelectorAll('.grid-stack-item').forEach((elem: HTMLElement) => {
-            if (elem.id != app.getId()) {
-                elem.style.display = 'none';
+        if (app != null) {
+            grid.disable();
+            app.getContainer().classList.toggle("app-station-fullscreen");
+            //app.getContainer().classList.toggle("grid-stack-item");
+            app.getContentElement().classList.toggle("grid-stack-item-content")
+            app.onFullScreen();
+            document.querySelectorAll('.grid-stack-item').forEach((elem: HTMLElement) => {
+                if (elem.id != app.getId()) {
+                    elem.style.display = 'none';
+                }
+            });
+        }else{
+            grid.enableMove(true);
+            const gridStackChildren = document.querySelector('.grid-stack').children;
+            let toWidgetId: string = null;
+            for(let i = 0; i < gridStackChildren.length; i++){
+                const current = gridStackChildren[i];
+                if(current.classList.contains("app-station-fullscreen")){
+                    toWidgetId = current.id;
+                    current.classList.toggle("app-station-fullscreen");
+                    //current.classList.toggle("grid-stack-item");
+                    current.children[0].classList.toggle("grid-stack-item-content")
+                    continue;
+                }
+                (current as HTMLElement).style.display = null;
             }
-        })
+            const availableApps = stateEngine.get("available-apps") as Array<App>;
+            availableApps.forEach(app => {
+                if(app.getId() == toWidgetId){
+                    this.registerOnClickEvent(app);
+                    app.onWidget();
+                }
+            });
+        }
+    }
+
+    private registerOnClickEvent(app: App): void{
+        const handler = (event: JQueryEventObject, ui: any) => {
+            $(app.getContainer()).off('click', handler);
+            stateEngine.set("fullscreen-app", app);
+        };
+        $(app.getContainer()).on('click', handler);
     }
 
     private syncApps(apps: Array<App>): void {
@@ -87,11 +118,7 @@ export default class Grid extends Component {
                 grid.addWidget(app.getContainer(), gridOptions.x, gridOptions.y, gridOptions.width,
                     gridOptions.height, gridOptions.autoPosition, null, null, null, null, gridOptions.id);
                 if (app.isFullScreenApp() == true) {
-                    const handler = (event: JQueryEventObject, ui: any) => {
-                        $(app.getContainer()).off('click', handler);
-                        stateEngine.set("fullscreen-app", app);
-                    };
-                    $(app.getContainer()).on('click', handler);
+                    this.registerOnClickEvent(app);
                 }
                 app.onWidgetCreated();
                 grid.resizable(app.getContainer(), false);
