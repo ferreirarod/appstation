@@ -17,17 +17,38 @@ export default class Grid extends Component {
     }
 
     protected getInnerHTML(): string {
-        return `<div class="grid-stack" data-gs-width="12" data-gs-animate="yes"></div>`;
+        return `
+            <div class="grid-stack" data-gs-width="12" data-gs-animate="yes"></div>
+        `;
+    }
+
+    private removeItem(item: HTMLElement): void {
+        const installedApps = stateEngine.get("installed-apps") as Array<App>;
+        const newInstalledApps = new Array<App>();
+        installedApps.forEach(app => {
+            if (item.id != app.getId()) {
+                newInstalledApps.push(app);
+            }
+        })
+        stateEngine.set("installed-apps", newInstalledApps);
+        appGridService.saveInstalledGrid();
     }
 
     protected afterRendered() {
         $(() => {
             $('.grid-stack').gridstack({
                 width: 12,
-                alwaysShowResizeHandle: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+                alwaysShowResizeHandle: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
+                removable: '.app-station-header',
+                removeTimeout: 100
             });
             $('.grid-stack').on('change', (event: JQueryEventObject, items: any[]) => {
                 this.serializeGridState();
+            });
+            $('.grid-stack').on('removed', (event, items) => {
+                for (var i = 0; i < items.length; i++) {
+                    this.removeItem(items[i]);
+                }
             });
         });
         this.setClass("app-station-grid");
@@ -59,13 +80,13 @@ export default class Grid extends Component {
                     elem.style.display = 'none';
                 }
             });
-        }else{
+        } else {
             grid.enableMove(true);
             const gridStackChildren = document.querySelector('.grid-stack').children;
             let toWidgetId: string = null;
-            for(let i = 0; i < gridStackChildren.length; i++){
+            for (let i = 0; i < gridStackChildren.length; i++) {
                 const current = gridStackChildren[i];
-                if(current.classList.contains("app-station-fullscreen")){
+                if (current.classList.contains("app-station-fullscreen")) {
                     toWidgetId = current.id;
                     current.classList.toggle("app-station-fullscreen");
                     //current.classList.toggle("grid-stack-item");
@@ -76,7 +97,7 @@ export default class Grid extends Component {
             }
             const availableApps = stateEngine.get("available-apps") as Array<App>;
             availableApps.forEach(app => {
-                if(app.getId() == toWidgetId){
+                if (app.getId() == toWidgetId) {
                     this.registerOnClickEvent(app);
                     app.onWidget();
                 }
@@ -84,7 +105,7 @@ export default class Grid extends Component {
         }
     }
 
-    private registerOnClickEvent(app: App): void{
+    private registerOnClickEvent(app: App): void {
         const handler = (event: JQueryEventObject, ui: any) => {
             $(app.getContainer()).off('click', handler);
             stateEngine.set("fullscreen-app", app);

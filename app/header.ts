@@ -6,11 +6,8 @@ import App from "./app";
 export default class Header extends Component {
 
     private photo: HTMLSpanElement;
-
     private menu: HTMLElement;
-
     private fullscreenApp: HTMLElement;
-
     private apps: HTMLElement;
 
     protected getInnerHTML(): string {
@@ -57,10 +54,10 @@ export default class Header extends Component {
                     this.menu.style.display = (value as Array<App>).length == availableApps.length ? 'none' : null;
                 }
             } else if (property == "fullscreen-app") {
-                if(value == null){
+                if (value == null) {
                     this.fullscreenApp.style.display = 'none';
                     this.apps.style.display = 'none';
-                }else{
+                } else {
                     this.fullscreenApp.style.display = null;
                     this.fullscreenApp.innerHTML = `\\\ ${(value as App).getName()}`;
                     this.apps.style.display = null;

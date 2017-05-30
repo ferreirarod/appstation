@@ -66,6 +66,11 @@ class AppList extends Component {
                 li.onclick = () => {
                     const installedApps = stateEngine.get("installed-apps");
                     const newInstalledApps = installedApps != null ? [...installedApps] : [];
+                    app.setX(0);
+                    app.setY(0);
+                    app.setAutoPosition(true);
+                    app.getContainer().style.top = null;
+                    app.getContainer().style.left = null;
                     newInstalledApps.push(app);
                     stateEngine.set("installed-apps", newInstalledApps);
                     appGridService.saveInstalledGrid();
