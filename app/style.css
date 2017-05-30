@@ -43,6 +43,12 @@ body{
     cursor: pointer;
 }
 
+.app-station-header-apps{
+    float: right;
+    margin: 14px 16px 0 0;
+    cursor: pointer;
+}
+
 .app-station-header-title{
     display: block;
     position: relative;
