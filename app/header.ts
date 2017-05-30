@@ -1,6 +1,7 @@
 import Component from "./component";
 import stateEngine from "./state-engine";
 import * as firebase from "firebase";
+import App from "./app";
 
 export default class Header extends Component {
 
@@ -11,7 +12,7 @@ export default class Header extends Component {
     protected getInnerHTML(): string {
         return `
             <svg id="${this.getId()}-menu" class="app-station-header-menu" version="1.0" xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 128.000000 128.000000" preserveAspectRatio="xMidYMid meet"> <g transform="translate(0.000000,128.000000) scale(0.100000,-0.100000)" fill="#666" stroke="none"> <path d="M30 1253 c-8 -3 -18 -11 -22 -17 -13 -19 -9 -221 4 -234 17 -17 1239 -17 1256 0 15 15 16 216 2 238 -8 13 -89 15 -617 17 -334 1 -615 -1 -623 -4z"/> <path d="M12 758 c-16 -16 -16 -220 0 -236 17 -17 1239 -17 1256 0 16 16 16 220 0 236 -17 17 -1239 17 -1256 0z"/> <path d="M12 278 c-15 -15 -16 -216 -2 -238 8 -13 89 -15 630 -15 541 0 622 2 630 15 14 22 13 223 -2 238 -17 17 -1239 17 -1256 0z"/> </g> </svg>
-            <span id="${this.getId()}-title" class="app-station-header-title">App Station</span>
+            <span id="${this.getId()}-title" class="app-station-header-title">App Station \\\ sample2</span>
             <span id="${this.getId()}-photo" class="app-station-header-photo"></span>
         `;
     }
@@ -37,6 +38,11 @@ export default class Header extends Component {
             if (property == "user") {
                 if (value != null) {
                     this.photo.style.content = `url(${value.photoURL})`;
+                }
+            } else if (property == "installed-apps") {
+                const availableApps = stateEngine.get("available-apps") as Array<App>;
+                if (value != null && availableApps != null) {
+                    this.menu.style.display = (value as Array<App>).length == availableApps.length ? 'none' : null;
                 }
             }
         }

@@ -38,13 +38,16 @@ export default class Grid extends Component {
             switch (property) {
                 case "installed-apps":
                     this.syncApps(value as Array<App>);
+                    break;
                 case "fullscreen-app":
                     this.fullscreenApp(value as App);
+                    break;
             }
         }
     }
 
     private fullscreenApp(app: App): void {
+        console.log(app);
         const grid = $('.grid-stack').data('gridstack');
         grid.disable();
         app.getContainer().classList.toggle("app-station-fullscreen");
