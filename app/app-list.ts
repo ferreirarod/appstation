@@ -60,7 +60,7 @@ class AppList extends Component {
                 const li: HTMLLIElement = document.createElement("li");
                 li.className = "app-station-list-container-item";
                 li.innerHTML = `
-                    <div>${app.getName()}</div>
+                    <div class="app-station-list-container-item-name">${app.getName()}</div>
                     <div>${app.getDescription()}</div>
                 `;
                 li.onclick = () => {
@@ -75,6 +75,7 @@ class AppList extends Component {
                     stateEngine.set("installed-apps", newInstalledApps);
                     appGridService.saveInstalledGrid();
                     stateEngine.set("app-list-menu-visible", false);
+                    stateEngine.set("fullscreen-app", null);
                 }
                 ul.appendChild(li);
             });

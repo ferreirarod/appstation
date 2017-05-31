@@ -44,6 +44,14 @@ abstract class App {
         this.container.appendChild(this.contentElement);
     }
 
+    public setBadge(badge: string){
+        if(badge != null && badge.trim().length != 0){
+            this.contentElement.setAttribute("data-badge", badge);
+        }else{
+            this.contentElement.removeAttribute("data-badge");
+        }
+    }
+
     protected getInnerHTML(): string {
         return '';
     }
