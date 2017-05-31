@@ -75,7 +75,8 @@ class AppList extends Component {
                     stateEngine.set("installed-apps", newInstalledApps);
                     appGridService.saveInstalledGrid();
                     stateEngine.set("app-list-menu-visible", false);
-                    stateEngine.set("fullscreen-app", null);
+                    //stateEngine.set("fullscreen-app", null);
+                    location.hash = '';
                 }
                 ul.appendChild(li);
             });

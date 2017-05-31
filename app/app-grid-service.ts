@@ -41,8 +41,10 @@ class AppGridService {
                         }
                     });
                     stateEngine.set("installed-apps", newInstalledApps);
+                    return;
                 }
             }
+            stateEngine.set("installed-apps", null);
         });
     }
 

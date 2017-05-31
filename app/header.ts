@@ -40,7 +40,8 @@ export default class Header extends Component {
         this.fullscreenApp.style.display = 'none';
         this.apps = this.getContainer().querySelector(`#${this.getId()}-apps`) as HTMLElement;
         this.apps.onclick = () => {
-            stateEngine.set("fullscreen-app", null);
+            //stateEngine.set("fullscreen-app", null);
+            location.hash = '';
         }
         this.apps.style.display = 'none';
         this.trash = this.getContainer().querySelector(`#${this.getId()}-trash`) as HTMLElement;

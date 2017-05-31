@@ -127,7 +127,8 @@ export default class Grid extends Component {
     private registerOnClickEvent(app: App): void {
         const handler = (event: JQueryEventObject, ui: any) => {
             $(app.getContainer()).off('click', handler);
-            stateEngine.set("fullscreen-app", app);
+            location.hash = app.getId();
+            //stateEngine.set("fullscreen-app", app);
         };
         $(app.getContainer()).on('click', handler);
     }
