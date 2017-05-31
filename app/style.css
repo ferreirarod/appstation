@@ -206,3 +206,10 @@ body{
     margin: 6px 0;
     cursor: pointer;
 }
+
+.app-station-header-trash{
+    position: absolute;
+    left: 50%;
+    margin-left: -14px;
+    top: 8px;
+}

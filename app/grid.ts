@@ -59,6 +59,7 @@ export default class Grid extends Component {
                 overHeader = false;
                 $('.app-station-header').on('mouseenter', mouseEnterHandler);
                 $('.app-station-header').on('mouseleave', mouseLeftHandler);
+                stateEngine.set("grid-dragging", true);
             });
             $('.grid-stack').on('dragstop', (event, items) => {
                 $('.app-station-header').off('mouseenter', mouseEnterHandler);
@@ -66,6 +67,7 @@ export default class Grid extends Component {
                 if(overHeader == true){
                     $('.grid-stack').data('gridstack').removeWidget(event.target as HTMLElement);
                 }
+                stateEngine.set("grid-dragging", false);
             });
         });
         this.setClass("app-station-grid");
