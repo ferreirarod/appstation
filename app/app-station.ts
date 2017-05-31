@@ -53,7 +53,7 @@ export default class AppStation extends Component {
                         const installedApps = stateEngine.get("installed-apps") as Array<App>;
                         if (installedApps != null) {
                             installedApps.forEach(app => {
-                                if (app.getId() == appId) {
+                                if (app.getId() == appId && app.isFullScreenApp()) {
                                     stateEngine.set("fullscreen-app", app);
                                 }
                             })
