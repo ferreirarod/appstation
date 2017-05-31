@@ -1,7 +1,7 @@
 import * as firebase from "firebase";
 import stateEngine from "./state-engine";
 import Component from "./component";
-import Login from "./login";
+import { Login, LoginProviders } from "./login";
 import Content from "./content";
 import Loading from "./loading";
 import App from "./app";
@@ -17,7 +17,7 @@ export default class AppStation extends Component {
 
     private firstHashLoad: boolean;
 
-    constructor(config: any, apps: Array<App>) {
+    constructor(config: any, apps: Array<App>, loginProviders: LoginProviders, appName?: string) {
         super(document.body, "app-station");
         this.firstHashLoad = true;
         firebase.initializeApp(config);
@@ -30,6 +30,10 @@ export default class AppStation extends Component {
                 stateEngine.set("user", null);
             }
         });
+        if (appName != null && appName.trim().length != 0) {
+            stateEngine.set("app-station-name", appName);
+        }
+        stateEngine.set("login-providers", loginProviders);
     }
 
     protected afterRendered() {
@@ -49,7 +53,6 @@ export default class AppStation extends Component {
                         const indexOfSlash = hash.indexOf("\\");
                         const endIndex: number = indexOfSlash == -1 ? hash.length : indexOfSlash;
                         const appId = hash.substring(beginIndex, endIndex);
-                        console.log(appId);
                         const installedApps = stateEngine.get("installed-apps") as Array<App>;
                         if (installedApps != null) {
                             installedApps.forEach(app => {

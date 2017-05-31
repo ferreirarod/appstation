@@ -71,6 +71,8 @@ export default class Header extends Component {
                 }
             } else if (property == "grid-dragging") {
                 this.checkTrashDisplay(value as boolean);
+            }else if(property == "app-station-name"){
+                this.titleElement.innerHTML = value;
             }
         }
     }

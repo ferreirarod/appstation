@@ -19,7 +19,7 @@ body{
 }
 
 .app-station-header div,.app-station-header span{
-    margin-top: 6px;    
+    margin-top: 7px;    
 }
 
 .app-station-header-photo{
@@ -34,7 +34,7 @@ body{
     height: 32px;
     width: 32px;
     z-index: 0;
-    margin-right: 16px;
+    margin-right: 28px;
     cursor: pointer;
 }
 
@@ -59,7 +59,7 @@ body{
     font-weight: 400;
     box-sizing: border-box;
     float: left;
-    padding: 8px 0 0 26px;
+    padding: 7px 0 0 26px;
     color: #666;
 }
 
@@ -212,4 +212,54 @@ body{
     left: 50%;
     margin-left: -14px;
     top: 8px;
+}
+
+.app-station-login{
+    width: 300px;
+    min-height: 100px;
+    margin: 100px auto;
+    position: relative;
+}
+
+.app-station-login-title{
+    display: block;
+    position: relative;
+    font-size: 30px;
+    line-height: 1;
+    letter-spacing: .02em;
+    font-weight: 400;
+    box-sizing: border-box;
+    margin: 0 auto 40px auto;
+    width: 170px;
+    color: #666;
+}
+
+.app-station-login svg{
+    width: 20px;
+    height: 20px;
+}
+
+.app-station-login-button{
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    font-size: 16px;
+    z-index: 1;
+    position: relative;
+    background: #fff;
+    border-radius: 2px;
+    box-sizing: border-box;
+    color: #757575;
+    direction: ltr;
+    font-weight: 500;
+    height: 40px;
+    max-width: 196px;
+    padding-left: 16px;
+    text-align: left;
+    margin: 0 auto;
+    padding: 8px;
+    cursor: pointer;
+}
+.app-station-login-button span{
+    position: absolute;
+    left: 41px;
+    top: 10px;
 }

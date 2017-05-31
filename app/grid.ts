@@ -147,24 +147,28 @@ export default class Grid extends Component {
             if (availableApps != null) {
                 availableApps.forEach(app => {
                     if (toRemove.indexOf(app.getId()) != -1) {
-                        grid.removeWidget(app.getContainer());
+                        if($(app.getContainer()) != null){
+                            grid.removeWidget(app.getContainer());
+                        }
                         app.onWidgetRemoved();
                     }
                 });
             }
         }
-        apps.forEach(app => {
-            if (document.querySelector(`#${app.getId()}`) == null) {
-                const gridOptions = app.getGridStackOptions();
-                grid.addWidget(app.getContainer(), gridOptions.x, gridOptions.y, gridOptions.width,
-                    gridOptions.height, gridOptions.autoPosition, null, null, null, null, gridOptions.id);
-                if (app.isFullScreenApp() == true) {
-                    this.registerOnClickEvent(app);
+        if(apps != null){
+            apps.forEach(app => {
+                if (document.querySelector(`#${app.getId()}`) == null) {
+                    const gridOptions = app.getGridStackOptions();
+                    grid.addWidget(app.getContainer(), gridOptions.x, gridOptions.y, gridOptions.width,
+                        gridOptions.height, gridOptions.autoPosition, null, null, null, null, gridOptions.id);
+                    if (app.isFullScreenApp() == true) {
+                        this.registerOnClickEvent(app);
+                    }
+                    app.onWidgetCreated();
+                    grid.resizable(app.getContainer(), false);
                 }
-                app.onWidgetCreated();
-                grid.resizable(app.getContainer(), false);
-            }
-        });
+            });
+        }
     }
 
     private serializeGridState() {
