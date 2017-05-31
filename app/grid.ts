@@ -38,9 +38,7 @@ export default class Grid extends Component {
         $(() => {
             $('.grid-stack').gridstack({
                 width: 12,
-                alwaysShowResizeHandle: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
-                removable: '.app-station-header',
-                removeTimeout: 100
+                alwaysShowResizeHandle: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
             });
             $('.grid-stack').on('change', (event: JQueryEventObject, items: any[]) => {
                 this.serializeGridState();
@@ -48,6 +46,25 @@ export default class Grid extends Component {
             $('.grid-stack').on('removed', (event, items) => {
                 for (var i = 0; i < items.length; i++) {
                     this.removeItem(items[i]);
+                }
+            });
+            let overHeader = false;
+            const mouseEnterHandler = () => {
+                overHeader = true;
+            }
+            const mouseLeftHandler = () => {
+                overHeader = false;
+            }
+            $('.grid-stack').on('dragstart', (event, items) => {
+                overHeader = false;
+                $('.app-station-header').on('mouseenter', mouseEnterHandler);
+                $('.app-station-header').on('mouseleave', mouseLeftHandler);
+            });
+            $('.grid-stack').on('dragstop', (event, items) => {
+                $('.app-station-header').off('mouseenter', mouseEnterHandler);
+                $('.app-station-header').off('mouseleave', mouseLeftHandler);
+                if(overHeader == true){
+                    $('.grid-stack').data('gridstack').removeWidget(event.target as HTMLElement);
                 }
             });
         });
