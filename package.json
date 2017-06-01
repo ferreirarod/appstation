@@ -1,12 +1,11 @@
 {
   "name": "appstation",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Javascript Appstore like enviroment Framework",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
-    "start": "webpack-dev-server --content-base dist/"
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -29,8 +28,7 @@
     "style-loader": "^0.18.1",
     "ts-loader": "^2.0.3",
     "typescript": "^2.3.2",
-    "webpack": "^2.5.1",
-    "webpack-dev-server": "^2.4.5"
+    "webpack": "^2.5.1"
   },
   "dependencies": {
     "@types/gridstack": "0.0.34",

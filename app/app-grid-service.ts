@@ -9,7 +9,7 @@ interface GridConfig {
     id: string
 }
 
-class AppGridService {
+export class AppGridService {
 
     public saveInstalledGrid() {
         const apps = stateEngine.get("installed-apps") as Array<App>;
