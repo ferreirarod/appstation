@@ -1,6 +1,5 @@
-declare namespace AppStation {
-
-    declare abstract class Component {
+declare module 'appstation' {
+    export abstract class Component {
         private parent;
         private id;
         private container;
@@ -78,9 +77,4 @@ declare namespace AppStation {
         protected afterRendered(): void;
         protected onStateChange(): (state: Object, property: string, value: any) => void;
     }
-}
-
-declare module 'appstation' {
-    import a = AppStation.AppStation;
-    export = a;
 }
