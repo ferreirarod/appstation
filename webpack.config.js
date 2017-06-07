@@ -1,12 +1,20 @@
 const path = require("path");
+const webpack = require("webpack");
 module.exports = {
   entry: {
-    app: ["./app/app-station.ts"]
+    app: ["./app/app-station.ts"]//,
+    //vendor: ["jquery", "firebase", "gridstack.jQueryUI"]
   },
   output: {
     path: path.resolve(__dirname, "dist"),
-    publicPath: "/assets/",
-    filename: "index.js"
+    filename: "index.js",
+    libraryTarget: 'var',
+    library: 'appstation'
+  },
+  externals: {
+    "firebase": "firebase",
+    "jquery": "$",
+    "gridstack.jQueryUI": true
   },
   module: {
     rules: [
@@ -50,5 +58,17 @@ module.exports = {
       "gridstack.jQueryUI": "gridstack/dist/gridstack.jQueryUI"
     }
   },
-  devtool: 'inline-source-map'
+  // plugins: [
+  //   new webpack.optimize.CommonsChunkPlugin({
+  //     name: "vendor",
+
+  //     // filename: "vendor.js"
+  //     // (Give the chunk a different name)
+
+  //     minChunks: Infinity,
+  //     // (with more entries, this ensures that no other module
+  //     //  goes into the vendor chunk)
+  //   })
+  // ],
+  //devtool: 'inline-source-map'
 };
