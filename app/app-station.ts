@@ -4,7 +4,7 @@ import Component from "./component";
 import { Login, LoginProviders } from "./login";
 import Content from "./content";
 import Loading from "./loading";
-import App from "./app";
+import _App from "./app";
 import appGridService from "./app-grid-service";
 
 export default class AppStation extends Component {
@@ -17,7 +17,9 @@ export default class AppStation extends Component {
 
     private firstHashLoad: boolean;
 
-    constructor(config: any, apps: Array<App>, loginProviders: LoginProviders, appName?: string) {
+    public static App = _App;
+
+    constructor(config: any, apps: Array<_App>, loginProviders: LoginProviders, appName?: string) {
         super(document.body, "app-station");
         this.firstHashLoad = true;
         firebase.initializeApp(config);
@@ -53,7 +55,7 @@ export default class AppStation extends Component {
                         const indexOfSlash = hash.indexOf("\\");
                         const endIndex: number = indexOfSlash == -1 ? hash.length : indexOfSlash;
                         const appId = hash.substring(beginIndex, endIndex);
-                        const installedApps = stateEngine.get("installed-apps") as Array<App>;
+                        const installedApps = stateEngine.get("installed-apps") as Array<_App>;
                         if (installedApps != null) {
                             installedApps.forEach(app => {
                                 if (app.getId() == appId && app.isFullScreenApp()) {

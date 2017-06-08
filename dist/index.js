@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 44);
+/******/ 	return __webpack_require__(__webpack_require__.s = 45);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -30613,9 +30613,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const firebase = __webpack_require__(6);
 const state_engine_1 = __webpack_require__(3);
 const component_1 = __webpack_require__(2);
-const login_1 = __webpack_require__(43);
-const content_1 = __webpack_require__(39);
-const loading_1 = __webpack_require__(42);
+const login_1 = __webpack_require__(44);
+const content_1 = __webpack_require__(40);
+const loading_1 = __webpack_require__(43);
+const app_1 = __webpack_require__(39);
 const app_grid_service_1 = __webpack_require__(8);
 class AppStation extends component_1.default {
     constructor(config, apps, loginProviders, appName) {
@@ -30671,6 +30672,7 @@ class AppStation extends component_1.default {
         };
     }
 }
+AppStation.App = app_1.default;
 exports.default = AppStation;
 
 
@@ -35037,9 +35039,100 @@ exports.default = AppList;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+class App {
+    constructor(id, name, description, fullscreen, width, height) {
+        this.id = id;
+        this.width = width;
+        this.height = height;
+        this.fullscreen = fullscreen;
+        this.name = name;
+        this.description = description;
+        this.autoPosition = true;
+        this.container = document.createElement("div");
+        this.container.id = this.id;
+        this.contentElement = document.createElement("div");
+        this.contentElement.className = "grid-stack-item-content ui-draggable-handle";
+        this.contentElement.innerHTML = this.getInnerHTML();
+        this.container.appendChild(this.contentElement);
+    }
+    setBadge(badge) {
+        if (badge != null && badge.trim().length != 0) {
+            this.contentElement.setAttribute("data-badge", badge);
+        }
+        else {
+            this.contentElement.removeAttribute("data-badge");
+        }
+    }
+    getInnerHTML() {
+        return '';
+    }
+    onWidgetCreated() {
+        // nothing here
+    }
+    onWidgetRemoved() {
+        // nothing here
+    }
+    getContainer() {
+        return this.container;
+    }
+    getContentElement() {
+        return this.contentElement;
+    }
+    getId() {
+        return this.id;
+    }
+    isFullScreenApp() {
+        return this.fullscreen;
+    }
+    onWidget() {
+    }
+    onFullScreen() {
+    }
+    getName() {
+        return this.name;
+    }
+    getDescription() {
+        return this.description;
+    }
+    getGridStackOptions() {
+        return {
+            x: this.x || 0,
+            y: this.y || 0,
+            width: this.width,
+            height: this.height,
+            autoPosition: this.autoPosition,
+            id: this.id
+        };
+    }
+    setX(x) {
+        this.x = x;
+    }
+    setY(y) {
+        this.y = y;
+    }
+    setWidth(width) {
+        this.width = width;
+    }
+    setHeight(height) {
+        this.height = height;
+    }
+    setAutoPosition(autoPosition) {
+        this.autoPosition = autoPosition;
+    }
+}
+exports.default = App;
+
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
 const component_1 = __webpack_require__(2);
-const header_1 = __webpack_require__(41);
-const grid_1 = __webpack_require__(40);
+const header_1 = __webpack_require__(42);
+const grid_1 = __webpack_require__(41);
 const app_list_1 = __webpack_require__(38);
 class AppContent extends component_1.default {
     afterRendered() {
@@ -35064,7 +35157,7 @@ exports.default = AppContent;
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35256,7 +35349,7 @@ exports.default = Grid;
 
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35352,7 +35445,7 @@ exports.default = Header;
 
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35378,7 +35471,7 @@ exports.default = Loading;
 
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35499,7 +35592,7 @@ exports.Login = Login;
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(19);

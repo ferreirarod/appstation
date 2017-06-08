@@ -73,6 +73,7 @@ declare module 'appstation' {
         private content;
         private loading;
         private firstHashLoad;
+        static App: typeof App;
         constructor(config: any, apps: Array<App>, loginProviders: LoginProviders, appName?: string);
         protected afterRendered(): void;
         protected onStateChange(): (state: Object, property: string, value: any) => void;
