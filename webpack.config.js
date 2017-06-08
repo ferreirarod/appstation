@@ -1,5 +1,6 @@
-const path = require("path");
 const webpack = require("webpack");
+const path = require("path");
+
 module.exports = {
   entry: {
     app: ["./app/app-station.ts"]//,
@@ -7,14 +8,9 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "index.js",
+    filename: "[name].[chunkhash].js",
     libraryTarget: 'var',
     library: 'appstation'
-  },
-  externals: {
-    "firebase": "",
-    "jquery": "",
-    "gridstack.jQueryUI": ""
   },
   module: {
     rules: [
@@ -58,6 +54,15 @@ module.exports = {
       "gridstack.jQueryUI": "gridstack/dist/gridstack.jQueryUI"
     }
   },
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: function (module) {
+        // this assumes your vendor imports exist in the node_modules directory
+        return module.context && module.context.indexOf('node_modules') !== -1;
+      }
+    })
+  ]
   // plugins: [
   //   new webpack.optimize.CommonsChunkPlugin({
   //     name: "vendor",
