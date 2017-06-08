@@ -24,13 +24,14 @@
   "devDependencies": {
     "@types/gridstack": "0.0.34",
     "@types/jquery": "^2.0.45",
-    "gridstack": "^0.3.0",
     "css-loader": "^0.28.2",
     "extract-text-webpack-plugin": "^2.1.0",
+    "gridstack": "^0.3.0",
     "source-map-loader": "^0.2.1",
     "style-loader": "^0.18.1",
     "ts-loader": "^2.0.3",
     "typescript": "^2.3.2",
+    "uglify-js": "git+https://github.com/mishoo/UglifyJS2.git#harmony-v2.8.22",
     "webpack": "^2.5.1"
   },
   "dependencies": {

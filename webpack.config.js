@@ -1,10 +1,10 @@
 const webpack = require("webpack");
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const path = require("path");
 
 module.exports = {
   entry: {
-    app: ["./app/app-station.ts"],
-    //vendor: vendorArray
+    app: "./app/app-station.ts"
   },
   output: {
     path: path.resolve(__dirname, "dist"),
@@ -14,11 +14,7 @@ module.exports = {
     umdNamedDefine: true
   },
   externals: {
-    firebase: 'firebase',
-    // jquery: "$",
-    // jquery: "jQuery",
-    // 'gridstack.jQueryUI': "$",
-    // 'gridstack.jQueryUI': "jQuery",
+    firebase: 'firebase'
   },
   module: {
     rules: [
@@ -62,26 +58,7 @@ module.exports = {
       "gridstack.jQueryUI": "gridstack/dist/gridstack.jQueryUI"
     }
   },
-  // plugins: [
-  //   new webpack.optimize.CommonsChunkPlugin({
-  //     name: 'vendor',
-  //     minChunks: function (module) {
-  //       // this assumes your vendor imports exist in the node_modules directory
-  //       return module.context && module.context.indexOf('node_modules') !== -1;
-  //     }
-  //   })
-  // ]
-  // plugins: [
-  //   new webpack.optimize.CommonsChunkPlugin({
-  //     name: "vendor",
-
-  //     // filename: "vendor.js"
-  //     // (Give the chunk a different name)
-
-  //     minChunks: Infinity,
-  //     // (with more entries, this ensures that no other module
-  //     //  goes into the vendor chunk)
-  //   })
-  // ],
-  //devtool: 'inline-source-map'
+  plugins: [
+    new UglifyJSPlugin({comments: false})
+  ]
 };
