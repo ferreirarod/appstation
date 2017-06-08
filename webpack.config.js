@@ -14,9 +14,11 @@ module.exports = {
     umdNamedDefine: true
   },
   externals: {
-    'gridstack.jQueryUI': true,
     firebase: 'firebase',
-    jquery: 'jQuery'
+    // jquery: "$",
+    // jquery: "jQuery",
+    // 'gridstack.jQueryUI': "$",
+    // 'gridstack.jQueryUI': "jQuery",
   },
   module: {
     rules: [
