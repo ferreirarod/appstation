@@ -68,7 +68,7 @@ declare module 'appstation' {
         setAutoPosition(autoPosition: boolean): void;
     }
 
-    export class AppStation extends Component {
+    export default class AppStation extends Component {
         private login;
         private content;
         private loading;
