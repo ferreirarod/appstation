@@ -12,9 +12,9 @@ module.exports = {
     library: 'appstation'
   },
   externals: {
-    "firebase": "firebase",
-    "jquery": "$",
-    "gridstack.jQueryUI": true
+    "firebase": "",
+    "jquery": "",
+    "gridstack.jQueryUI": ""
   },
   module: {
     rules: [
